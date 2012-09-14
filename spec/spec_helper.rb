@@ -4,10 +4,6 @@ $LOAD_PATH << File.join(__DIR__, "..", "lib")
 
 require 'skink/integrations/rspec'
 
-RSpec.configure do |config|
-  config.include Skink::DSL
-end
-
 require 'test_server'
 Skink.rack_app = Rack::Builder.new do
   map "/" do
