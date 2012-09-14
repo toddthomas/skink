@@ -8,9 +8,9 @@ Gem::Specification.new do |gem|
   gem.version       = Skink::VERSION
   gem.authors       = ["Todd Thomas"]
   gem.email         = ["todd.thomas@openlogic.com"]
-  gem.description   = %q{A DSL for testing REST APIs}
+  gem.description   = %q{A Ruby DSL for testing REST APIs.}
   gem.summary       = %q{Skink is Capybara's smaller, more primitive companion.}
-  gem.homepage      = ""
+  gem.homepage      = "https://github.com/toddthomas/skink.git"
 
   gem.add_dependency "rack-test"
   gem.add_dependency "openlogic-resourceful"
