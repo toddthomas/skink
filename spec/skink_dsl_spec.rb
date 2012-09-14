@@ -43,10 +43,17 @@ shared_examples "a REST API test language" do
   end
 
   it "is able to test requests which require basic authentication" do
+    with_basic_auth "admin", "admin"
+    get "/protected"
+    response.status_code.should == 200
+    response.body.should == "Welcome, authenticated client."
+  end
+
+  it "is able to test requests which require basic authentication for specified realm" do
     get "/protected"
     response.status_code.should == 401
 
-    with_basic_auth "admin", "admin"
+    with_basic_auth "admin", "admin", "Restricted Area"
     get "/protected"
     response.status_code.should == 200
     response.body.should == "Welcome, authenticated client."

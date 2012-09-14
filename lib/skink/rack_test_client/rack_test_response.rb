@@ -13,6 +13,10 @@ class RackTestResponse < Client::Response
     native_response.status
   end
 
+  def headers
+    native_response.header
+  end
+
   def body
     native_response.body
   end

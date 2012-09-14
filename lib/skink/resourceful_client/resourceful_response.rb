@@ -13,6 +13,10 @@ class ResourcefulResponse < Client::Response
     native_response.code
   end
 
+  def headers
+    native_response.headers
+  end
+
   def body
     native_response.body || ""
   end

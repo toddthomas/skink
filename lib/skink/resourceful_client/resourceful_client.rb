@@ -18,9 +18,13 @@ class ResourcefulClient < Client::Base
     @http_accessor ||= Resourceful::HttpAccessor.new
   end
 
-  def with_basic_auth(user_name, password)
-    #http_accessor.add_authenticator Resourceful::PromiscuousBasicAuthenticator.new(user_name, password)
-    http_accessor.add_authenticator Resourceful::BasicAuthenticator.new("Restricted Area", user_name, password)
+  def with_basic_auth(user_name, password, realm = nil)
+    authenticator = if realm.nil?
+                      Resourceful::PromiscuousBasicAuthenticator.new(user_name, password)
+                    else
+                      Resourceful::BasicAuthenticator.new(realm, user_name, password)
+                    end
+    http_accessor.add_authenticator authenticator
   end
 
   def with_header(name, value)

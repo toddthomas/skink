@@ -6,6 +6,10 @@ class Response
     raise NotImplementedError
   end
 
+  def headers
+    raise NotImplementedError
+  end
+
   def body
     raise NotImplementedError
   end

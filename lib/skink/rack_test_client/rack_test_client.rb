@@ -14,7 +14,7 @@ class RackTestClient < Client::Base
     @app = rack_app
   end
 
-  def with_basic_auth(user_name, password)
+  def with_basic_auth(user_name, password, realm = nil)
     authorize(user_name, password)
   end
 

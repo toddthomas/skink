@@ -8,7 +8,7 @@ class Base
     raise NotImplementedError
   end
 
-  def with_basic_auth(user_name, email_address)
+  def with_basic_auth(user_name, email_address, realm = nil)
     raise NotImplementedError
   end
 
