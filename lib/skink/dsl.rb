@@ -41,7 +41,11 @@ module Skink
 
     Skink::Client::Base.instance_methods(false).each do |method|
       define_method method do |*args, &block|
-        Skink.client.send method, *args, &block
+        begin
+          Skink.client.send method, *args, &block
+        rescue NoMethodError
+          super(*args) if method == :method_missing
+        end
       end
     end
   end

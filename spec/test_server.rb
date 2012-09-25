@@ -38,3 +38,11 @@ get '/protected' do
   protected!
   "Welcome, authenticated client."
 end
+
+get '/xml_doc', :provides => :xml do
+  "<root><foo attr=\"true\">Some text<foo/></foo></root>"
+end
+
+get '/json_doc', :provides => :json do
+  '{"root": {"foo": {"foo": "howdy"}}}'
+end

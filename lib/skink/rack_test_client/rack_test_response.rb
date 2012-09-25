@@ -13,6 +13,10 @@ class RackTestResponse < Client::Response
     native_response.status
   end
 
+  def has_status_code? code
+    native_response.status == code
+  end
+
   def headers
     native_response.header
   end

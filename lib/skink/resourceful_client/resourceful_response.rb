@@ -13,8 +13,12 @@ class ResourcefulResponse < Client::Response
     native_response.code
   end
 
+  def has_status_code? code
+    native_response.code == code
+  end
+
   def headers
-    native_response.headers
+    native_response.headers.to_hash
   end
 
   def body
