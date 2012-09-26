@@ -7,6 +7,12 @@ shared_examples "a REST API test language" do
     response.body.size.should == 0
   end
 
+  it "has a helpful failure message for have_status_code" do
+    head "/"
+    expect { response.should have_status_code 500 }.to raise_error("expected status code 500, but got 200")
+    expect { response.should_not have_status_code 200 }.to raise_error("expected status code would not be 200, but dang, it was")
+  end
+
   it "is able to test a GET" do
     get "/"
     response.should have_status_code 200
@@ -59,6 +65,12 @@ shared_examples "a REST API test language" do
     response.body.should == "Welcome, authenticated client."
   end
 
+  it "is able to test requests requiring basic auth with long usernames or passwords" do
+    with_basic_auth "xanthomata.loosish@shazbot.invalid", "super-super-super-super-super-super-dooper-secret"
+    get "/protected"
+    response.should have_status_code 200
+  end
+
   it "is able to test the presence of specified response headers" do
     with_accept_header "application/json"
     get "/json_doc"
@@ -88,6 +100,15 @@ shared_examples "a REST API test language" do
     response.should_not have_jsonpath "shazbot.mcgillicuddy"
     response.should have_jsonpath "root.foo.foo", /ow/
     response.should_not have_jsonpath "root.foo.foo", /oo/
+  end
+
+  it "gives a helpful error message when have_xpath fails" do
+    with_accept_header "application/xml"
+    get "/xml_doc"
+    expect {response.should have_xpath "//not/a/valid/xpath"}.to raise_error(/^expected xpath .* in .*$/)
+    expect {response.should have_xpath "//root/foo", /not there/}.to raise_error(%r{^expected xpath .* with value /not there/ in .*$})
+    expect {response.should_not have_xpath "//foo/foo"}.to raise_error(/^expected xpath .* would not be in .*/)
+    expect {response.should_not have_xpath "//root/foo", /Some/}.to raise_error(%r{^expected xpath .* with value /Some/ would not be in .*$})
   end
 end
 

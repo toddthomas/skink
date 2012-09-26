@@ -1,3 +1,5 @@
+Dir[File.dirname(__FILE__) + "/../../../spec/support/**/*.rb"].each {|f| STDOUT.puts f; require f}
+
 require 'skink/dsl'
 
 RSpec.configure do |config|
