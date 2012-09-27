@@ -125,7 +125,7 @@ shared_examples "a REST API test language" do
   end
 end
 
-describe Skink::DSL do
+describe Skink::DSL, type: :api do
   context "using rack_test" do
     it_behaves_like "a REST API test language"
   end
@@ -133,5 +133,15 @@ describe Skink::DSL do
   context "using Resourceful" do
     before { Skink.base_url = "http://localhost:4567" }
     it_behaves_like "a REST API test language"
+  end
+end
+
+api_feature "Built-in acceptance test DSL" do
+  background "with something set" do
+    @answer = 42
+  end
+
+  scenario "verifying something is set" do
+    @answer.should be 42
   end
 end
