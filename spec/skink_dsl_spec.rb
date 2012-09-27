@@ -86,14 +86,27 @@ shared_examples "a REST API test language" do
     response.should_not have_header(content_type: %r{json})
   end
 
-  it "is able to test for the presence of elements in the response body" do
+  it "is able to test for the presence of xml elements in the response body" do
     with_accept_header "application/xml"
     get "/xml_doc"
-    response.should have_xpath "//foo/foo"
+    response.should have_xpath "//foo/bar"
     response.should_not have_xpath "//bar/foo"
     response.should have_xpath "//foo", /Some/
-    response.should_not have_xpath "//foo", /bar/
+    response.should_not have_xpath "//foo/bar", /foo/
+  end
 
+  it "is able to test for the presence of namespaced xml elements in the response body" do
+    with_accept_header "application/xml"
+    get "/xml_doc_with_namespaces"
+    response.should have_xpath "//fake:foo/fake:bar"
+
+    # test a pathological case that was encountered in the real world
+    with_accept_header "application/xml"
+    get "/xml_doc_with_pathological_namespaces"
+    response.should have_xpath "//fake:foo/fake:bar"
+  end
+
+  it "is able to test for the presence of json elements in the response body" do
     with_accept_header "application/json"
     get "/json_doc"
     response.should have_jsonpath "root.foo.foo"
@@ -107,7 +120,7 @@ shared_examples "a REST API test language" do
     get "/xml_doc"
     expect {response.should have_xpath "//not/a/valid/xpath"}.to raise_error(/^expected xpath .* in .*$/)
     expect {response.should have_xpath "//root/foo", /not there/}.to raise_error(%r{^expected xpath .* with value /not there/ in .*$})
-    expect {response.should_not have_xpath "//foo/foo"}.to raise_error(/^expected xpath .* would not be in .*/)
+    expect {response.should_not have_xpath "//foo/bar"}.to raise_error(/^expected xpath .* would not be in .*/)
     expect {response.should_not have_xpath "//root/foo", /Some/}.to raise_error(%r{^expected xpath .* with value /Some/ would not be in .*$})
   end
 end

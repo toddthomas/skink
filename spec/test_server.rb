@@ -1,3 +1,5 @@
+# encoding: UTF-8
+
 require 'sinatra'
 
 helpers do
@@ -40,7 +42,30 @@ get '/protected' do
 end
 
 get '/xml_doc', :provides => :xml do
-  "<root><foo attr=\"true\">Some text<foo/></foo></root>"
+  <<-END
+  <?xml version="1.0" encoding="UTF-8"?>
+  <root>
+    <foo attr=\"true\">Some text<bar>more text</bar></foo>
+  </root>
+  END
+end
+
+get '/xml_doc_with_namespaces', :provides => :xml do
+  <<-END
+  <?xml version="1.0" encoding="UTF-8"?>
+  <root xmlns:fake="http://www.example.org/xmlns/fake">
+    <fake:foo attr=\"true\">Some text<fake:bar>more text</fake:bar></fake:foo>
+  </root>
+  END
+end
+
+get '/xml_doc_with_pathological_namespaces', :provides => :xml do
+  <<-END
+  <?xml version="1.0" encoding="UTF-8"?>
+  <root xmlns="http://www.example.org/xmlns/fake" xmlns:fake="http://www.example.org/xmlns/fake">
+    <foo attr=\"true\">Some text<bar>more text</bar></foo>
+  </root>
+  END
 end
 
 get '/json_doc', :provides => :json do
