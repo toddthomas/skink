@@ -98,12 +98,12 @@ shared_examples "a REST API test language" do
   it "is able to test for the presence of namespaced xml elements in the response body" do
     with_accept_header "application/xml"
     get "/xml_doc_with_namespaces"
-    response.should have_xpath "//fake:foo/fake:bar"
+    response.should have_xpath "//fake:foo/fake:bar", /more/
 
     # test a pathological case that was encountered in the real world
     with_accept_header "application/xml"
     get "/xml_doc_with_pathological_namespaces"
-    response.should have_xpath "//fake:foo/fake:bar"
+    response.should have_xpath "//fake:foo/fake:bar", /more/
   end
 
   it "is able to test for the presence of json elements in the response body" do
