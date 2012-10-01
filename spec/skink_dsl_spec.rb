@@ -79,6 +79,15 @@ shared_examples "a REST API test language" do
     response.should_not have_header("This-Is-Not-A-Header-Name")
   end
 
+  it "has a helpful failure message for have_header" do
+    with_accept_header "application/json"
+    get "/json_doc"
+    expect {response.should have_header(:not_a_real_header)}.to raise_error(/expected response headers .* to have header Not-A-Real-Header/)
+    expect {response.should have_header(content_type: /xml/)}.to raise_error(%r{expected response headers .* to have header Content-Type with value /xml/})
+    expect {response.should_not have_header(:content_type)}.to raise_error(/expected response headers .* to not have header Content-Type/)
+    expect {response.should_not have_header('Content-Type' => /json/)}.to raise_error(%r{expected response headers .* to not have header Content-Type with value /json/})
+  end
+
   it "is able to test the value of specified response headers" do
     with_accept_header "application/xml"
     get "/xml_doc"
