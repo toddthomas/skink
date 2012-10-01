@@ -20,7 +20,7 @@ module Utils
     end
 
     # otherwise this should work
-    name.split("_").map(&:capitalize).join("-")
+    name.to_s.split(/[_-]/).map(&:capitalize).join("-")
   end
 end
 
