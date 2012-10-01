@@ -18,7 +18,11 @@ class RackTestResponse < Client::Response
   end
 
   def headers
-    native_response.header
+    if native_response.is_a? Rack::Response
+      native_response.header
+    else
+      native_response.headers
+    end
   end
 
   def body
