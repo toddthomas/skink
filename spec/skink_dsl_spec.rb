@@ -95,6 +95,20 @@ shared_examples "a REST API test language" do
     response.should_not have_header(content_type: %r{json})
   end
 
+  it "is able to test for content in the response body" do
+    get "/"
+    response.should have_content "Hello, world!"
+    response.should have_content(/hello.*world/i)
+  end
+
+  it "has a helpful error message for have_content" do
+    get "/"
+    expect {response.should have_content "Foo!"}.to raise_error("expected Hello, world! to equal \"Foo!\"")
+    expect {response.should have_content(/foo/)}.to raise_error("expected Hello, world! to match /foo/")
+    expect {response.should_not have_content "Hello, world!"}.to raise_error("expected Hello, world! to not equal \"Hello, world!\"")
+    expect {response.should_not have_content(/world/)}.to raise_error("expected Hello, world! to not match /world/")
+  end
+
   it "is able to test for the presence of xml elements in the response body" do
     with_accept_header "application/xml"
     get "/xml_doc"

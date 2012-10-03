@@ -37,6 +37,20 @@ RSpec::Matchers.define :have_header do |expected|
   end
 end
 
+RSpec::Matchers.define :have_content do |expected|
+  match do |response|
+    expected === response.body
+  end
+
+  failure_message_for_should do |response|
+    "expected #{response.body} to #{expected.is_a?(Regexp) ? "match" : "equal"} #{expected.inspect}"
+  end
+
+  failure_message_for_should_not do |response|
+    "expected #{response.body} to not #{expected.is_a?(Regexp) ? "match" : "equal"} #{expected.inspect}"
+  end
+end
+
 RSpec::Matchers.define :have_xpath do |xpath, value|
   match do |response|
     response.has_xpath? xpath, value
