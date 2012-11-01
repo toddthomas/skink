@@ -1,4 +1,4 @@
-Dir[File.dirname(__FILE__) + "/../../../spec/support/**/*.rb"].each {|f| STDOUT.puts f; require f}
+Dir[File.dirname(__FILE__) + "/../../../spec/support/**/*.rb"].each {|f| require f}
 
 require 'skink/dsl'
 
