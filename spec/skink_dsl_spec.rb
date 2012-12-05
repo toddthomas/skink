@@ -160,11 +160,17 @@ describe Skink::DSL, type: :api do
 end
 
 api_feature "Built-in acceptance test DSL" do
-  background "with something set" do
+  background "with background" do
     @answer = 42
   end
 
-  scenario "verifying something is set" do
+  scenario "background exists" do
     @answer.should be 42
+  end
+
+  given(:user) { "yer mom" }
+
+  scenario "given method works" do
+    user.should eq "yer mom"
   end
 end
