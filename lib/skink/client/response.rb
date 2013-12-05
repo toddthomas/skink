@@ -52,6 +52,8 @@ class Response
 
   def has_xpath? path, value = nil
     elems = xpath(path)
+    elems = [elems] unless elems.respond_to? :any?
+    
     if value
       block = ->(elem) {value === elem.to_s}
     else
