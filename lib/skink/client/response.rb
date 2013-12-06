@@ -91,7 +91,8 @@ class Response
   def links
     if link_header
       LinkHeader.parse(link_header).to_a.map do |linkarr|
-        {url: linkarr[0]}.merge Hash[linkarr[1]]
+        with_sym_keys = Hash[linkarr[1].map{|(k,v)| [k.to_sym,v]}]
+        {url: linkarr[0]}.merge with_sym_keys
       end
     end
   end
@@ -103,6 +104,7 @@ class Response
     if opts.nil?
       links.any?
     else
+      opts = Hash[opts.map{|(k,v)| [k.to_sym,v]}]
       links.any? do |link|
         link == link.deep_merge(opts)
       end
