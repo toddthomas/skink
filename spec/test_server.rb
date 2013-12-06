@@ -69,5 +69,6 @@ get '/xml_doc_with_pathological_namespaces', :provides => :xml do
 end
 
 get '/json_doc', :provides => :json do
+  response.headers["Link"] = "<http://link.example.com>; rel=\"search\""
   '{"root": {"foo": {"foo": "howdy"}}}'
 end

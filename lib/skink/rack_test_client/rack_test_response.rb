@@ -25,6 +25,10 @@ class RackTestResponse < Client::Response
     end
   end
 
+  def link_header
+    headers["Link"]
+  end
+
   def body
     native_response.body
   end

@@ -77,6 +77,9 @@ shared_examples "a REST API test language" do
     response.should have_header(:content_type)
     response.should have_header("Content-Type")
     response.should_not have_header("This-Is-Not-A-Header-Name")
+    
+    response.should have_link_header
+    response.should have_link_header({url: 'http://link.example.com'})
   end
 
   it "has a helpful failure message for have_header" do
@@ -94,6 +97,7 @@ shared_examples "a REST API test language" do
     response.should have_header(content_type: %r{charset})
     response.should_not have_header(content_type: %r{json})
   end
+
 
   it "is able to test for content in the response body" do
     get "/"

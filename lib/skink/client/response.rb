@@ -2,6 +2,8 @@ require 'skink/client/utils'
 
 require 'nokogiri'
 require 'jsonpath'
+require 'link_header'
+require 'hash_deep_merge'
 
 module Skink
 module Client
@@ -80,6 +82,31 @@ class Response
     end
 
     elems.any?(&block)
+  end
+
+  def link_header
+    raise NotImplementedError
+  end
+
+  def links
+    if link_header
+      LinkHeader.parse(link_header).to_a.map do |linkarr|
+        {url: linkarr[0]}.merge Hash[linkarr[1]]
+      end
+    end
+  end
+  
+  # example match keys for the link header:
+  # :url => "http://example.com",
+  # :rel => "search"
+  def has_link_header?(opts=nil)
+    if opts.nil?
+      links.any?
+    else
+      links.any? do |link|
+        link == link.deep_merge(opts)
+      end
+    end
   end
 
   def method_missing(name, *args)

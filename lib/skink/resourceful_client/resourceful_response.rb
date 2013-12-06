@@ -21,6 +21,10 @@ class ResourcefulResponse < Client::Response
     native_response.headers.to_hash
   end
 
+  def link_header
+    headers['Link'].join(',')
+  end
+
   def body
     native_response.body || ""
   end

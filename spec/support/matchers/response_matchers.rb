@@ -37,6 +37,30 @@ RSpec::Matchers.define :have_header do |expected|
   end
 end
 
+RSpec::Matchers.define :have_link_header do |expected|
+  match do |response|
+    response.has_link_header? expected
+  end
+
+  failure_message_for_should do |response|
+    if expected.respond_to? :keys
+      "expected response headers #{response.headers.inspect} to have link header header #{normalize_header_name(expected.keys.first)} matching #{expected.values.first.inspect}"
+    else
+      "expected response headers #{response.headers.inspect} to have header #{normalize_header_name(expected)}"
+    end
+  end
+
+  failure_message_for_should_not do |response|
+    if expected.respond_to? :keys
+      "expected response headers #{response.headers.inspect} to not have link header #{normalize_header_name(expected.keys.first)} matching #{expected.values.first.inspect}"
+    else
+      "expected response headers #{response.headers.inspect} to not have link header #{normalize_header_name(expected)}"
+    end
+  end
+end
+
+
+
 RSpec::Matchers.define :have_content do |expected|
   match do |response|
     expected === response.body
