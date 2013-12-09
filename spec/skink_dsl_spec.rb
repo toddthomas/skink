@@ -79,7 +79,9 @@ shared_examples "a REST API test language" do
     response.should_not have_header("This-Is-Not-A-Header-Name")
     
     response.should have_link_header
-    response.should have_link_header({url: 'http://link.example.com'})
+    response.should have_link_header({url: 'http://link.example.com', rel: 'search'})
+    response.should have_link_header({'url' => 'http://link.example.com', 'rel' => 'search'})
+    response.should have_link_header({url: 'http://link.example.com', 'rel' => 'search'})
   end
 
   it "has a helpful failure message for have_header" do
