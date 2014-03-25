@@ -19,6 +19,7 @@ Gem::Specification.new do |gem|
   gem.add_dependency "hash-deep-merge"
   gem.add_dependency "link_header"
 
+  gem.add_development_dependency "coveralls"
   gem.add_development_dependency "rspec"
   gem.add_development_dependency "sinatra"
   gem.add_development_dependency "rake"
