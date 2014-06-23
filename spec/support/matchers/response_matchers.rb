@@ -1,3 +1,4 @@
+require 'rspec/expectations'
 require 'skink/client/utils'
 include Skink::Client::Utils
 
