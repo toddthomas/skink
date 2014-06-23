@@ -2,6 +2,9 @@ __DIR__ = File.dirname(__FILE__)
 
 $LOAD_PATH << File.join(__DIR__, "..", "lib")
 
+require 'coveralls'
+Coveralls.wear!
+
 require 'skink/integrations/rspec'
 
 require 'test_server'
