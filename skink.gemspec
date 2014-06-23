@@ -10,7 +10,7 @@ Gem::Specification.new do |gem|
   gem.email         = ["todd.thomas@openlogic.com"]
   gem.description   = %q{A Ruby DSL for testing REST APIs.}
   gem.summary       = %q{Skink is Capybara's smaller, more primitive companion.}
-  gem.homepage      = "https://github.com/toddthomas/skink.git"
+  gem.homepage      = "https://github.com/openlogic/skink"
 
   gem.add_dependency "rack-test"
   gem.add_dependency "openlogic-resourceful"
