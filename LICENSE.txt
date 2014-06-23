@@ -1,4 +1,4 @@
-Copyright (c) 2012 Todd Thomas
+Copyright (c) 2012 OpenLogic, Inc.
 
 MIT License
 
